@@ -45,6 +45,9 @@ const commonConfig: webpack.Configuration = {
   },
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
+    fallback: {
+      'react/jsx-runtime': require.resolve('react/jsx-runtime'),
+    },
   },
   node: {
     __dirname: false,

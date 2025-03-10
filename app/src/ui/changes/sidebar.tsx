@@ -21,8 +21,9 @@ import {
 } from '../autocompletion'
 import { ClickSource } from '../lib/list'
 import { WorkingDirectoryFileChange } from '../../models/status'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
+
 import { openFile } from '../lib/open-file'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { Account } from '../../models/account'
 import { PopupType } from '../../models/popup'
 import { filesNotTrackedByLFS } from '../../lib/git/lfs'

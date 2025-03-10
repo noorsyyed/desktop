@@ -3,6 +3,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "resolveJsonModule": true,
     "importHelpers": true,
     "target": "ES2021",

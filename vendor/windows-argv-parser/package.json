@@ -9,7 +9,8 @@
     "install": "node-gyp rebuild && tsc"
   },
   "dependencies": {
-    "node-addon-api": "^7.0.0"
+    "node-addon-api": "^7.0.0",
+    "windows-argv-parser": "file:"
   },
   "devDependencies": {
     "node-gyp": "^10.1.0",

@@ -171,10 +171,9 @@ const sendErrorWithContext = (
         extra.windowState = currentState.windowState ?? 'Unknown'
         extra.accounts = `${currentState.accounts.length}`
 
-        extra.automaticallySwitchTheme = `${
-          currentState.selectedTheme === ApplicationTheme.System &&
+        extra.automaticallySwitchTheme = `${currentState.selectedTheme === ApplicationTheme.System &&
           supportsSystemThemeChanges()
-        }`
+          }`
       }
     } catch (err) {
       /* ignore */
@@ -360,28 +359,32 @@ ipcRenderer.on('cli-action', (_, action) =>
     .catch(e => log.error(`CLI action ${action.kind} failed`, e))
 )
 
-// react-virtualized will use the literal string "grid" as the 'aria-label'
-// attribute unless we override it. This is a problem because aria-label should
-// not be set unless there's a compelling reason for it[1].
-//
-// Similarly the default props call for the 'aria-readonly' attribute to be set
-// to true which according to MDN doesn't fit our use case[2]:
-//
-// > This indicates to the user that an interactive element that would normally
-// > be focusable and copyable has been placed in a read-only (not disabled)
-// > state.
-//
-// 1. https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
-// 2. https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-readonly
-;(function (
-  defaults: Record<string, unknown> | undefined,
-  types: Record<string, unknown> | undefined
-) {
-  ;['aria-label', 'aria-readonly'].forEach(k => {
-    delete defaults?.[k]
-    delete types?.[k]
-  })
-})(Grid.defaultProps, Grid.propTypes)
+  // react-virtualized will use the literal string "grid" as the 'aria-label'
+  // attribute unless we override it. This is a problem because aria-label should
+  // not be set unless there's a compelling reason for it[1].
+  //
+  // Similarly the default props call for the 'aria-readonly' attribute to be set
+  // to true which according to MDN doesn't fit our use case[2]:
+  //
+  // > This indicates to the user that an interactive element that would normally
+  // > be focusable and copyable has been placed in a read-only (not disabled)
+  // > state.
+  //
+  // 1. https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label
+  // 2. https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-readonly
+  ; (function (
+    defaults: Record<string, unknown> | undefined,
+    types: Record<string, unknown> | undefined
+  ) {
+    ;['aria-label', 'aria-readonly'].forEach(k => {
+      if (defaults) {
+        delete defaults[k]
+      }
+      if (types) {
+        delete types[k]
+      }
+    })
+  })(Grid.defaultProps, (Grid as any).propTypes)
 
 ReactDOM.render(
   <App
